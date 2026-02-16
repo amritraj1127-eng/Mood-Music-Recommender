@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mood Based Music Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<a href="/" class="top-logo">
+    AR<span>songs</span>
+</a>
+
+<!-- Top Right Login Button -->
+<button class="login-btn" onclick="openModal()">Login</button>
+
+
+<div class="container">
+
+    <h1>🎵 Mood Based Music Recommender</h1>
+    <p class="subtitle">Discover music based on your mood</p>
+
+    <form method="POST" class="search-form">
+        <input type="text" name="feeling" placeholder="How are you feeling today?" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if mood %}
+        <div class="result-section">
+            <h2>Detected Mood: <span>{{ mood }}</span></h2>
+
+            <div class="song-list">
+                {% for song in songs %}
+                    <div class="song-card">
+                        <div class="song-info">
+                            <h3>{{ song.Track }}</h3>
+                            <p>{{ song.Artist }}</p>
+                        </div>
+                        <div class="play-btn">
+                            <a href="{{ song.Url_youtube }}" target="_blank">▶ Play</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+
+<!-- Bottom Right Signature -->
+<div class="signature">
+    Powered by Amrit Raj
+</div>
+
+<!-- Login Popup Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Login / Sign Up</h2>
+
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+
+        <button class="modal-login">Login</button>
+        <button class="modal-signup">Sign Up</button>
+    </div>
+</div>
+
+<script>
+function openModal() {
+    document.getElementById("loginModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("loginModal").style.display = "none";
+}
+</script>
+
+</body>
+</html>
